@@ -1,0 +1,27 @@
+#
+# on ec2_wizard launched instance
+#
+# https://docs.aws.amazon.com/dlami/latest/devguide/tutorial-base.html
+# sudo rm /usr/local/cuda
+# sudo ln -s /usr/local/cuda-10.1 /usr/local/cuda
+
+# data
+mkdir -p $HOME/data
+aws s3 cp s3://spacenet-dataset/spacenet/SN6_buildings/test_public/AOI_11_Rotterdam/ $HOME/data/ --recursive
+
+# code
+git clone https://github.com/grmpflh27/SpaceNet_SAR_Buildings_Solutions.git
+cd SpaceNet_SAR_Buildings_Solutions/2-MaksimovKA/
+
+# build
+docker build -t spacenet6:2-MaksimovKA .
+
+# test
+docker run -it --runtime=nvidia --ipc=host -v $HOME/data/:/data spacenet6:2-MaksimovKA bash
+
+# restart
+docker restart ed2f4f336657
+docker exec -it ed2f4f336657 bash
+
+# test
+sh test.sh /data
