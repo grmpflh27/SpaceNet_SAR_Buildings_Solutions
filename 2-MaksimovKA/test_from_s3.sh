@@ -4,8 +4,8 @@ ARG2=${2:-/wdata/solution.csv}
 
 mkdir -p /s3/SAR-Intensity/
 rm -rf /s3/SAR-Intensity/*
-aws s3 cp $S3_PATH /s3/SAR-Intensity/
-echo "Copied ${S3_PATH} to /s3/SAR-Intensity"
+
+python pull_from_s3.py $S3_PATH
 
 mkdir -p /wdata/segmentation_logs/ /wdata/folds_predicts/
 
@@ -21,7 +21,6 @@ fi
 python3 /project/predict/predict.py --config_path /project/configs/senet154_gcc_fold1.py --gpu '"0"' --test_images /s3 --workers 16 --batch_size 16
 
 python3 /project/predict/submit.py --submit_path $ARG2
-
 
 # copying over to s3
 dateStr=`date --iso-8601=seconds | sed 's/+00:00//' | tr -d ':' | tr -d '-'`
