@@ -5,9 +5,12 @@
 # sudo rm /usr/local/cuda
 # sudo ln -s /usr/local/cuda-10.1 /usr/local/cuda
 
+# FETCH
+
 # data
 mkdir -p $HOME/data
 aws s3 cp s3://spacenet-dataset/spacenet/SN6_buildings/test_public/AOI_11_Rotterdam/ $HOME/data/ --recursive
+
 
 # code
 git clone https://github.com/grmpflh27/SpaceNet_SAR_Buildings_Solutions.git
