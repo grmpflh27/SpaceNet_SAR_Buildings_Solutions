@@ -19,12 +19,8 @@ cd SpaceNet_SAR_Buildings_Solutions/2-MaksimovKA/
 # build
 docker build -t spacenet6:2-MaksimovKA .
 
-# test
-docker run -it --runtime=nvidia --ipc=host -v $HOME/data/:/data spacenet6:2-MaksimovKA bash
+# test from local (all data in $HOME/data)
+sh docker_run_from_local.sh $HOME/data
 
-# restart
-docker restart ed2f4f336657
-docker exec -it ed2f4f336657 bash
-
-# test
-sh test.sh /data
+# test from s3 (single tile)
+sh docker_run_from_s3.sh s3://spacenet-dataset/spacenet/SN6_buildings/test_public/AOI_11_Rotterdam/SAR-Intensity/SN6_Test_Public_AOI_11_Rotterdam_SAR-Intensity_20190804120223_20190804120456_tile_83.tif

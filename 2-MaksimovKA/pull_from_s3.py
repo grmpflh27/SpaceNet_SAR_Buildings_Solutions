@@ -1,6 +1,4 @@
 import sys
-
-import boto3
 import os
 
 
@@ -9,8 +7,6 @@ LOCAL_CACHE = '/s3/SAR-Intensity/'
 
 if __name__ == '__main__':
     s3_path = sys.argv[1].strip()
-    
-    client = boto3.client('s3')
 
     if s3_path[-1] == '/':
         rc = os.system(f'aws s3 cp {s3_path} {LOCAL_CACHE} --recursive')
